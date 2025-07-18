@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 
+# ✅ BACKEND
 class MemoryGameBackend:
-    def __init__(self):
+    def _init_(self):
         self.symbols = []
         self.moves = 0
         self.first_click = None
@@ -25,46 +26,37 @@ class MemoryGameBackend:
         self.moves += 1
         return self.moves
 
-# ✅ Frontend Code (your original)
-
-import tkinter as tk
-from tkinter import messagebox
-from memory_game_backend import MemoryGameBackend
-
-# Initialize Backend
+# ✅ FRONTEND
 backend = MemoryGameBackend()
 
-# Color map for text (emoji) color only
+# Color map for emojis
 symbol_colors = {
-    '🍎': "#D32F2F",   # Deep Red
-    '🍌': "#FBC02D",   # Golden Yellow
-    '🍒': "#C2185B",   # Dark Pink
-    '🍇': "#7B1FA2",   # Deep Purple
-    '🍋': "#FDD835",   # Lemon Yellow
-    '🥝': "#388E3C",   # Rich Green
-    '🍍': "#FFA000",   # Vivid Orange
-    '🍉': "#43A047"    # Watermelon Green
+    '🍎': "#D32F2F",
+    '🍌': "#FBC02D",
+    '🍒': "#C2185B",
+    '🍇': "#7B1FA2",
+    '🍋': "#FDD835",
+    '🥝': "#388E3C",
+    '🍍': "#FFA000",
+    '🍉': "#43A047"
 }
-# Create the main window
+
+# Main window
 memory_game = tk.Tk()
-memory_game.configure(bg="green")
 memory_game.title("Memory Matching Game")
-
-# Make fullscreen
+memory_game.configure(bg="#4CAF50")  # ✅ Better green background
 memory_game.attributes("-fullscreen", True)
-
-# Allow ESC key to exit fullscreen
-memory_game.bind("<Escape>", lambda event: memory_game.attributes("-fullscreen", False))
 
 buttons = {}
 
+# ✅ FUNCTIONS
 def button_click(x, y):
     index = (x * 4) + y
     button = buttons[(x, y)]
 
     if button["text"] == " " and backend.second_click is None:
         symbol = backend.symbols[index]
-        button.config(text=symbol, fg=symbol_colors[symbol])  # only text color changes
+        button.config(text=symbol, fg=symbol_colors[symbol])
 
         if backend.first_click is None:
             backend.first_click = (x, y)
@@ -105,32 +97,54 @@ def reset_game():
         btn.config(text=" ", fg="black", bg="#ECECEC", state="normal")
     move_label.config(text=f"Moves: {backend.moves}")
 
-# Move Counter Label
-move_label = tk.Label(memory_game, text="Moves: 0", font=("Arial", 16))
+# ✅ Exit Fullscreen
+def exit_fullscreen():
+    memory_game.attributes("-fullscreen", False)
+    exit_button.pack_forget()
+
+def enter_fullscreen():
+    memory_game.attributes("-fullscreen", True)
+    exit_button.pack(pady=5)
+
+memory_game.bind("<Escape>", lambda event: exit_fullscreen())
+memory_game.bind("<F11>", lambda event: enter_fullscreen())
+
+# ✅ UI LAYOUT
+
+# Header
+header = tk.Frame(memory_game, bg="#2E7D32", pady=10)
+header.pack(fill="x")
+title_label = tk.Label(header, text="🍉 Memory Matching Game 🍍", font=("Arial", 24, "bold"), fg="white", bg="#2E7D32")
+title_label.pack()
+
+# Move Counter
+move_label = tk.Label(memory_game, text="Moves: 0", font=("Arial", 16), bg="#4CAF50", fg="white")
 move_label.pack(pady=10)
 
-# Game Grid Frame
-grid_frame = tk.Frame(memory_game)
+# Game Grid
+grid_frame = tk.Frame(memory_game, bg="#4CAF50")
 grid_frame.pack()
 
 for i in range(4):
     for j in range(4):
         btn = tk.Button(grid_frame, text=" ", font=("Arial", 20), width=6, height=3,
-                        command=lambda x=i, y=j: button_click(x, y))
+                        bg="#ECECEC", command=lambda x=i, y=j: button_click(x, y))
         btn.grid(row=i, column=j, padx=5, pady=5)
         buttons[(i, j)] = btn
 
+# Footer
+footer = tk.Frame(memory_game, bg="#2E7D32", pady=15)
+footer.pack(fill="x", side="bottom")
+
 # Reset Button
-reset_button = tk.Button(memory_game, text="Reset Game", font=("Arial", 14), bg="#FF7043", fg="white", command=reset_game)
-reset_button.pack(pady=20)
+reset_button = tk.Button(footer, text="🔁 Reset Game", font=("Arial", 14),
+                         bg="#FF7043", fg="white", command=reset_game)
+reset_button.pack(side="left", padx=20)
 
 # Exit Fullscreen Button
-def exit_fullscreen():
-    memory_game.attributes("-fullscreen", False)
+exit_button = tk.Button(footer, text="⛶ Exit Fullscreen", font=("Arial", 12),
+                        bg="#9E9E9E", fg="white", command=exit_fullscreen)
+exit_button.pack(side="right", padx=20)
 
-exit_button = tk.Button(memory_game, text="Exit Fullscreen", font=("Arial", 12), command=exit_fullscreen)
-exit_button.pack(pady=5)
-
-# Run the app
+# Run the App
 memory_game.mainloop()
-
