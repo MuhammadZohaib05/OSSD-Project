@@ -37,8 +37,6 @@
  3️⃣ Run the Application
 
  ## 📸 Screenshots
-⚠️ Replace these placeholders with actual images once the interface is complete
-<img width="1917" height="1027" alt="image" src="https://github.com/user-attachments/assets/f4fd0109-07ba-4370-af71-011065f8deee" />
 
 ## 🏠 Main Game Hub Interface
 <img width="1917" height="1027" alt="image" src="https://github.com/user-attachments/assets/f4fd0109-07ba-4370-af71-011065f8deee" />
@@ -47,9 +45,10 @@
 <img width="692" height="948" alt="image" src="https://github.com/user-attachments/assets/d4c09146-29c4-4a3a-b20b-3ece0cf49345" />
 
 ## 🧩 **Game 2: Memory Matching Game**
-<img width="641" height="900" alt="image" src="https://github.com/user-attachments/assets/131a6814-5a7e-45da-8bb2-7f54c69171e4" />
+<img width="1915" height="1078" alt="image" src="https://github.com/user-attachments/assets/5196391c-d458-4569-a2b7-f39caa074078" />
 
 ## ✊✋✌️ **Game 3: Rock Paper Scissors**
+<img width="1920" height="1022" alt="image" src="https://github.com/user-attachments/assets/e47faf22-30cd-4b00-a555-b4e9f6d6899b" />
 
 ## 👥 Contribution Credits
 
@@ -62,7 +61,7 @@ Tashfah Ashraf
 Maheen Irfan
 
 ## ✊✋✌️ Team 3 - Game 3: Rock Paper Scissor
-Tayyaba
+Hafiza Tayyaba
 
 ## 🧰 Team 4 – GitHub, Database & Integration
 Muhammad Zohaib
@@ -75,6 +74,7 @@ All teams collaborated through feature branches, pull requests, and code reviews
 **Issue 2:** https://github.com/MuhammadZohaib05/OSSD-Project/issues/10
 **Issue 3:** https://github.com/MuhammadZohaib05/OSSD-Project/issues/9
 **Issue 4:** https://github.com/MuhammadZohaib05/OSSD-Project/issues/8
+
 
 ## 🔌 Backend / API Explanation
 The project uses SQLite for local data storage to persist game scores.
