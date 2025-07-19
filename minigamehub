@@ -1,16 +1,16 @@
 import tkinter as tk
 import subprocess
+import sys
+import os
 
 # Create Main Window
 root = tk.Tk()
 root.title("Mini Game Hub")
 root.geometry("600x700")
 root.configure(bg="#F0F0F0")
-
-# Enable resizable + toggle full screen
 root.resizable(True, True)
 
-# Center the window on screen when it opens
+# Center the window on screen
 window_width = 600
 window_height = 700
 screen_width = root.winfo_screenwidth()
@@ -19,7 +19,7 @@ center_x = int((screen_width / 2) - (window_width / 2))
 center_y = int((screen_height / 2) - (window_height / 2))
 root.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}")
 
-# Toggle fullscreen
+# Fullscreen toggle functions
 def toggle_fullscreen():
     root.attributes("-fullscreen", True)
 
@@ -30,49 +30,64 @@ def exit_fullscreen():
 header_frame = tk.Frame(root, bg="#37474F", height=80)
 header_frame.pack(fill="x")
 
-header_label = tk.Label(header_frame, text="🎮 Welcome to the Mini Game Hub 🎮",
-                        font=("Arial", 22, "bold"), bg="#37474F", fg="white")
+header_label = tk.Label(
+    header_frame, 
+    text="🎮 Welcome to the Mini Game Hub 🎮",
+    font=("Arial", 22, "bold"), 
+    bg="#37474F", 
+    fg="white"
+)
 header_label.pack(pady=20)
 
 # ------------------ MAIN MENU ------------------
 menu_frame = tk.Frame(root, bg="#F0F0F0")
 menu_frame.pack(expand=True)
 
-# Start Tic Tac Toe Button
+# Game Launcher Functions (with absolute paths)
 def start_tic_tac_toe():
-    subprocess.Popen(["python", "tic_tac_toc_merge.py"])
+    try:
+        game_path = os.path.join(os.path.dirname(__file__), "tic_tac_toc_merge.py")
+        subprocess.Popen([sys.executable, game_path])
+    except Exception as e:
+        print(f"⚠️ Error starting Tic Tac Toe: {e}")
 
+def start_memory_match():
+    try:
+        game_path = os.path.join(os.path.dirname(__file__), "memory_matching_game_merge.py")
+        subprocess.Popen([sys.executable, game_path])
+    except Exception as e:
+        print(f"⚠️ Error starting Memory Match: {e}")
+
+def start_rock_paper_scissors():
+    try:
+        game_path = os.path.join(os.path.dirname(__file__), "rock_paper_scissor_merge.py")
+        subprocess.Popen([sys.executable, game_path])
+    except Exception as e:
+        print(f"⚠️ Error starting Rock Paper Scissors: {e}")
+
+# Buttons for each game
 tic_tac_toe_button = tk.Button(menu_frame, text="Start Tic Tac Toe", font=("Arial", 16),
                                width=30, height=2, bg="#4CAF50", fg="white", command=start_tic_tac_toe)
 tic_tac_toe_button.pack(pady=20)
-
-# Start Memory Matching Game Button
-def start_memory_match():
-    subprocess.Popen(["python3", "memory_matching_game_merge.py"])
 
 memory_match_button = tk.Button(menu_frame, text="Start Memory Matching Game", font=("Arial", 16),
                                 width=30, height=2, bg="#2196F3", fg="white", command=start_memory_match)
 memory_match_button.pack(pady=20)
 
-# Start Rock Paper Scissors Game Button
-def start_rock_paper_scissors():
-    subprocess.Popen(["python", "rock_paper_scissor_merge.py"])
-
 rock_paper_scissors_button = tk.Button(menu_frame, text="Start Rock Paper Scissors", font=("Arial", 16),
                                        width=30, height=2, bg="#673AB7", fg="white", command=start_rock_paper_scissors)
 rock_paper_scissors_button.pack(pady=20)
 
-# Fullscreen Button
+# Fullscreen controls
 fullscreen_button = tk.Button(menu_frame, text="Go Fullscreen", font=("Arial", 16),
                               width=30, height=2, bg="#FF9800", fg="white", command=toggle_fullscreen)
 fullscreen_button.pack(pady=20)
 
-# Exit Fullscreen Button
 exit_fullscreen_button = tk.Button(menu_frame, text="Exit Fullscreen", font=("Arial", 16),
                                    width=30, height=2, bg="#9E9E9E", fg="white", command=exit_fullscreen)
 exit_fullscreen_button.pack(pady=20)
 
-# Exit Button
+# Exit app button
 exit_button = tk.Button(menu_frame, text="Exit", font=("Arial", 16),
                         width=30, height=2, bg="#f44336", fg="white", command=root.quit)
 exit_button.pack(pady=20)
@@ -81,8 +96,13 @@ exit_button.pack(pady=20)
 footer_frame = tk.Frame(root, bg="#37474F", height=60)
 footer_frame.pack(side="bottom", fill="x")
 
-footer_label = tk.Label(footer_frame, text="© 2025 Mini Game Hub | Built by Your Team",
-                        font=("Arial", 12), bg="#37474F", fg="#B0BEC5")
+footer_label = tk.Label(
+    footer_frame,
+    text="© 2025 Mini Game Hub | Built by Your Team",
+    font=("Arial", 12), 
+    bg="#37474F", 
+    fg="#B0BEC5"
+)
 footer_label.pack(pady=15)
 
 # Run the app
