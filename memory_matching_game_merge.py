@@ -4,7 +4,7 @@ import random
 
 # ✅ BACKEND
 class MemoryGameBackend:
-    def _init_(self):
+    def __init__(self):
         self.symbols = []
         self.moves = 0
         self.first_click = None
