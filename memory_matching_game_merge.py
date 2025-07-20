@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+from game_db import save_result  # ✅ DB function imported
 
 # ✅ BACKEND
 class MemoryGameBackend:
-    def _init_(self):
+    def __init__(self):  # ✅ Fixed typo (_init_ → __init__)
         self.symbols = []
         self.moves = 0
         self.first_click = None
@@ -29,7 +30,6 @@ class MemoryGameBackend:
 # ✅ FRONTEND
 backend = MemoryGameBackend()
 
-# Color map for emojis
 symbol_colors = {
     '🍎': "#D32F2F",
     '🍌': "#FBC02D",
@@ -41,10 +41,9 @@ symbol_colors = {
     '🍉': "#43A047"
 }
 
-# Main window
 memory_game = tk.Tk()
 memory_game.title("Memory Matching Game")
-memory_game.configure(bg="#4CAF50")  # ✅ Better green background
+memory_game.configure(bg="#4CAF50")
 memory_game.attributes("-fullscreen", True)
 
 buttons = {}
@@ -89,6 +88,7 @@ def check_win():
         if btn["text"] == " ":
             return
     messagebox.showinfo("Congratulations!", f"You've matched all pairs in {backend.moves} moves!")
+    save_result("Memory Match", f"Completed in {backend.moves} moves")  # ✅ Save to DB
     reset_game()
 
 def reset_game():
@@ -110,18 +110,14 @@ memory_game.bind("<Escape>", lambda event: exit_fullscreen())
 memory_game.bind("<F11>", lambda event: enter_fullscreen())
 
 # ✅ UI LAYOUT
-
-# Header
 header = tk.Frame(memory_game, bg="#2E7D32", pady=10)
 header.pack(fill="x")
 title_label = tk.Label(header, text="🍉 Memory Matching Game 🍍", font=("Arial", 24, "bold"), fg="white", bg="#2E7D32")
 title_label.pack()
 
-# Move Counter
 move_label = tk.Label(memory_game, text="Moves: 0", font=("Arial", 16), bg="#4CAF50", fg="white")
 move_label.pack(pady=10)
 
-# Game Grid
 grid_frame = tk.Frame(memory_game, bg="#4CAF50")
 grid_frame.pack()
 
@@ -132,19 +128,15 @@ for i in range(4):
         btn.grid(row=i, column=j, padx=5, pady=5)
         buttons[(i, j)] = btn
 
-# Footer
 footer = tk.Frame(memory_game, bg="#2E7D32", pady=15)
 footer.pack(fill="x", side="bottom")
 
-# Reset Button
 reset_button = tk.Button(footer, text="🔁 Reset Game", font=("Arial", 14),
                          bg="#FF7043", fg="white", command=reset_game)
 reset_button.pack(side="left", padx=20)
 
-# Exit Fullscreen Button
 exit_button = tk.Button(footer, text="⛶ Exit Fullscreen", font=("Arial", 12),
                         bg="#9E9E9E", fg="white", command=exit_fullscreen)
 exit_button.pack(side="right", padx=20)
 
-# Run the App
 memory_game.mainloop()

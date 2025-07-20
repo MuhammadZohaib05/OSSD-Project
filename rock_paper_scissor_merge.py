@@ -1,7 +1,6 @@
-
-
 import tkinter as tk
 from rock_paper_scissor_backened import get_computer_choice, get_winner
+from game_db import save_result  # Import at the top
 
 # Main game window
 root = tk.Tk()
@@ -14,6 +13,9 @@ def play(choice):
     result = get_winner(choice, computer_choice)
     result_text = f"You chose: {choice}\nComputer chose: {computer_choice}\n\n{result}"
     
+    # Save the result to the database
+    save_result("Rock Paper Scissors", result)
+
     # Clear old content and insert new result
     result_display.config(state="normal")
     result_display.delete("1.0", tk.END)
